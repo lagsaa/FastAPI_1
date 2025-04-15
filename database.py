@@ -2,14 +2,9 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-# Read from environment variable
-database_url = os.environ.get("DATABASE_URL")
+# Use SQLite locally if DATABASE_URL is not set
+database_url = os.environ.get("DATABASE_URL", "sqlite:///./test.db")
 
-# SQLAlchemy engine
 engine = create_engine(database_url, echo=True)
-
-# Session maker
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-# Base class for models
 Base = declarative_base()
